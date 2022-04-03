@@ -243,6 +243,8 @@ MiscData getMiscData()
 	MiscData miscData;
 	miscData.logMode      = g_engine.conf.data.logMode;
 	miscData.showTooltips = g_engine.conf.data.showTooltips;
+	miscData.langMaps     = g_ui.langMapper.getMapFilesFound();
+	miscData.langMap      = g_engine.conf.data.langMap;
 	return miscData;
 }
 /* -------------------------------------------------------------------------- */
@@ -293,7 +295,8 @@ void save(const MiscData& data)
 {
 	g_engine.conf.data.logMode      = data.logMode;
 	g_engine.conf.data.showTooltips = data.showTooltips;
-	Fl_Tooltip::enable(g_engine.conf.data.showTooltips);
+	g_engine.conf.data.langMap      = data.langMap;
+	Fl_Tooltip::enable(g_engine.conf.data.showTooltips); // TODO - move this to UI init
 }
 
 /* -------------------------------------------------------------------------- */

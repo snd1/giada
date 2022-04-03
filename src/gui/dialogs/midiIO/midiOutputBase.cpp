@@ -29,9 +29,7 @@
 #include "gui/elems/basics/check.h"
 #include "gui/elems/midiIO/midiLearner.h"
 
-namespace giada
-{
-namespace v
+namespace giada::v
 {
 geLightningLearnerPack::geLightningLearnerPack(int x, int y, ID channelId)
 : geMidiLearnerPack(x, y)
@@ -89,13 +87,4 @@ void gdMidiOutputBase::cb_enableLightning()
 {
 	c::io::channel_enableMidiLightning(m_channelId, m_enableLightning->value());
 }
-
-/* -------------------------------------------------------------------------- */
-
-void gdMidiOutputBase::setTitle(ID channelId)
-{
-	std::string tmp = "MIDI Output Setup (channel " + std::to_string(channelId) + ")";
-	copy_label(tmp.c_str());
-}
-} // namespace v
-} // namespace giada
+} // namespace giada::v

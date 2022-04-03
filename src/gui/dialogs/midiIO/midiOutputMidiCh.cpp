@@ -39,7 +39,6 @@ gdMidiOutputMidiCh::gdMidiOutputMidiCh(ID channelId)
 : gdMidiOutputBase(300, 168, channelId)
 {
 	end();
-	setTitle(m_channelId + 1);
 
 	m_enableOut   = new geCheck(G_GUI_OUTER_MARGIN, G_GUI_OUTER_MARGIN, 150, G_GUI_UNIT, "Enable MIDI output");
 	m_chanListOut = new geChoice(w() - 108, G_GUI_OUTER_MARGIN, 100, G_GUI_UNIT);

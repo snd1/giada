@@ -27,6 +27,7 @@
 #include "tabMisc.h"
 #include "core/const.h"
 #include "gui/elems/basics/choice.h"
+#include "gui/elems/config/stringMenu.h"
 
 constexpr int LABEL_WIDTH = 120;
 
@@ -42,9 +43,11 @@ geTabMisc::geTabMisc(geompp::Rect<int> bounds)
 	{
 		m_debugMsg = new geChoice("Debug messages", LABEL_WIDTH);
 		m_tooltips = new geChoice("Tooltips", LABEL_WIDTH);
+		m_langMap  = new geStringMenu("Language file", m_data.langMaps, "-- no language files found --", LABEL_WIDTH);
 
 		body->add(m_debugMsg, 20);
 		body->add(m_tooltips, 20);
+		body->add(m_langMap, 20);
 		body->end();
 	}
 
@@ -61,6 +64,13 @@ geTabMisc::geTabMisc(geompp::Rect<int> bounds)
 	m_tooltips->addItem("Enabled");
 	m_tooltips->showItem(m_data.showTooltips);
 	m_tooltips->onChange = [this](ID id) { m_data.showTooltips = id; };
+
+	m_langMap->addItem("English (default)");
+	if (m_data.langMap == "")
+		m_langMap->showItem(0);
+	else
+		m_langMap->showItem(m_data.langMap);
+	m_langMap->onChange = [this](ID /*id*/) { m_data.langMap = m_langMap->getSelectedLabel(); };
 }
 
 /* -------------------------------------------------------------------------- */

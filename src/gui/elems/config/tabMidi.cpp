@@ -28,6 +28,8 @@
 #include "core/const.h"
 #include "gui/elems/basics/box.h"
 #include "gui/elems/basics/check.h"
+#include "gui/elems/basics/choice.h"
+#include "gui/elems/config/stringMenu.h"
 #include "utils/gui.h"
 #include <string>
 
@@ -35,27 +37,6 @@ constexpr int LABEL_WIDTH = 120;
 
 namespace giada::v
 {
-geTabMidi::geMenu::geMenu(const char* l, const std::vector<std::string>& data,
-    const std::string& msgIfNotFound)
-: geChoice(l, LABEL_WIDTH)
-{
-	if (data.size() == 0)
-	{
-		addItem(msgIfNotFound.c_str(), 0);
-		showItem(0);
-		deactivate();
-	}
-	else
-	{
-		for (const std::string& d : data)
-			addItem(u::gui::removeFltkChars(d).c_str(), -1); // -1: auto-increment ID
-	}
-}
-
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-
 geTabMidi::geTabMidi(geompp::Rect<int> bounds)
 : Fl_Group(bounds.x, bounds.y, bounds.w, bounds.h, "MIDI")
 , m_data(c::config::getMidiData())
@@ -69,7 +50,7 @@ geTabMidi::geTabMidi(geompp::Rect<int> bounds)
 
 		geFlex* line1 = new geFlex(Direction::HORIZONTAL, G_GUI_OUTER_MARGIN);
 		{
-			portOut   = new geMenu("Output port", m_data.outPorts, "-- no ports found --");
+			portOut   = new geStringMenu("Output port", m_data.outPorts, "-- no ports found --", LABEL_WIDTH);
 			enableOut = new geCheck(0, 0, 0, 0);
 
 			line1->add(portOut);
@@ -79,7 +60,7 @@ geTabMidi::geTabMidi(geompp::Rect<int> bounds)
 
 		geFlex* line2 = new geFlex(Direction::HORIZONTAL, G_GUI_OUTER_MARGIN);
 		{
-			portIn   = new geMenu("Input port", m_data.inPorts, "-- no ports found --");
+			portIn   = new geStringMenu("Input port", m_data.inPorts, "-- no ports found --", LABEL_WIDTH);
 			enableIn = new geCheck(0, 0, 0, 0);
 
 			line2->add(portIn);
@@ -87,7 +68,7 @@ geTabMidi::geTabMidi(geompp::Rect<int> bounds)
 			line2->end();
 		}
 
-		midiMap = new geMenu("Output Midi Map", m_data.midiMaps, "(no MIDI maps available)");
+		midiMap = new geStringMenu("Output Midi Map", m_data.midiMaps, "(no MIDI maps available)", LABEL_WIDTH);
 		sync    = new geChoice("Sync", LABEL_WIDTH);
 
 		body->add(system, 20);

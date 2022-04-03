@@ -32,15 +32,12 @@
 #include "utils/gui.h"
 #include <FL/Fl_Pack.H>
 
-namespace giada
-{
-namespace v
+namespace giada::v
 {
 gdMidiOutputSampleCh::gdMidiOutputSampleCh(ID channelId)
 : gdMidiOutputBase(300, 140, channelId)
 {
 	end();
-	setTitle(m_channelId);
 
 	m_enableLightning = new geCheck(G_GUI_OUTER_MARGIN, G_GUI_OUTER_MARGIN, 120, 20, "Enable MIDI lightning output");
 
@@ -72,5 +69,4 @@ void gdMidiOutputSampleCh::rebuild()
 	m_enableLightning->value(m_data.lightningEnabled);
 	m_learners->update(m_data);
 }
-} // namespace v
-} // namespace giada
+} // namespace giada::v
